@@ -1,0 +1,554 @@
+﻿@model TbVote;
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting System Admin Panel</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4e73df;
+            --secondary-color: #6c757d;
+            --success-color: #1cc88a;
+            --info-color: #36b9cc;
+            --warning-color: #f6c23e;
+            --danger-color: #e74a3b;
+        }
+
+        body {
+            background-color: #f8f9fc;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .sidebar {
+            background: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        .sidebar-brand {
+            padding: 1.5rem 1rem;
+            font-size: 1.2rem;
+            font-weight: 800;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.05rem;
+        }
+
+        .sidebar-divider {
+            margin: 0 1rem 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .nav-item {
+            position: relative;
+            margin-bottom: 0.25rem;
+        }
+
+            .nav-item a {
+                color: rgba(255, 255, 255, 0.8);
+                padding: 0.75rem 1rem;
+                display: block;
+                transition: all 0.2s;
+            }
+
+                .nav-item a:hover {
+                    color: white;
+                    background-color: rgba(255, 255, 255, 0.1);
+                }
+
+                .nav-item a.active {
+                    color: white;
+                    font-weight: 700;
+                }
+
+                .nav-item a i {
+                    margin-right: 0.5rem;
+                }
+
+        .topbar {
+            background-color: white;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        }
+
+        .card {
+            border: none;
+            border-radius: 0.35rem;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+            margin-bottom: 1.5rem;
+        }
+
+        .card-header {
+            background-color: #f8f9fc;
+            border-bottom: 1px solid #e3e6f0;
+            padding: 0.75rem 1.25rem;
+        }
+
+        .card-body {
+            padding: 1.25rem;
+        }
+
+        .stat-card {
+            border-left: 4px solid;
+            border-radius: 0.35rem;
+        }
+
+        .stat-card-primary {
+            border-left-color: var(--primary-color);
+        }
+
+        .stat-card-success {
+            border-left-color: var(--success-color);
+        }
+
+        .stat-card-info {
+            border-left-color: var(--info-color);
+        }
+
+        .stat-card-warning {
+            border-left-color: var(--warning-color);
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .stat-label {
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+
+        .icon-circle {
+            height: 3rem;
+            width: 3rem;
+            border-radius: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bg-primary-light {
+            background-color: rgba(78, 115, 223, 0.1);
+        }
+
+        .bg-success-light {
+            background-color: rgba(28, 200, 138, 0.1);
+        }
+
+        .bg-info-light {
+            background-color: rgba(54, 185, 204, 0.1);
+        }
+
+        .bg-warning-light {
+            background-color: rgba(246, 194, 62, 0.1);
+        }
+
+        .text-primary {
+            color: var(--primary-color) !important;
+        }
+
+        .text-success {
+            color: var(--success-color) !important;
+        }
+
+        .text-info {
+            color: var(--info-color) !important;
+        }
+
+        .text-warning {
+            color: var(--warning-color) !important;
+        }
+
+        .chart-container {
+            height: 300px;
+            position: relative;
+        }
+
+        .progress {
+            height: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-bar-primary {
+            background-color: var(--primary-color);
+        }
+
+        .progress-bar-success {
+            background-color: var(--success-color);
+        }
+
+        .progress-bar-info {
+            background-color: var(--info-color);
+        }
+
+        .progress-bar-warning {
+            background-color: var(--warning-color);
+        }
+
+        .nav-pills .nav-link.active {
+            background-color: var(--primary-color);
+        }
+
+        .breadcrumb {
+            background-color: transparent;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer {
+            padding: 1.5rem;
+            background-color: white;
+            box-shadow: 0 -0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row ">
+            <!-- Sidebar -->
+            <div class="col-md-2 col-lg-2 d-none d-md-block sidebar p-0">
+                <div class="sidebar-brand">
+                    <i class="fas fa-vote-yea me-2"></i>
+                    Vote Admin
+                </div>
+                <hr class="sidebar-divider">
+                <div class="nav flex-column">
+                    <div class="nav-item">
+                        <a href="#" class="nav-link active">
+                            <i class="fas fa-fw fa-tachometer-alt"></i>
+                            Dashboard
+                        </a>
+                    </div>
+                    <div class="nav-item">
+                        <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">
+                            <i class="fas fa-fw fa-user"></i>
+                            Home
+                        </a>
+                    </div>
+                    <div class="nav-item">
+                        <a asp-area="Admin" asp-controller="Home" asp-action="Edit" class="nav-link">
+                            <i class="fas fa-fw fa-plus-circle"></i>
+                            Add Votes
+                        </a>
+                    </div>
+                    <div class="nav-item">
+                        <a asp-area="Admin" asp-controller="Home" asp-action="List" class="nav-link">
+                            <i class="fas fa-fw fa-table"></i>
+                            View Results
+                        </a>
+                    </div>
+                 
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-10 col-lg-10 ms-auto">
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light topbar mb-4 p-3 static-top">
+                    <button class="btn d-md-none rounded-circle me-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <div class="d-none d-sm-inline-block form-inline me-auto ml-md-3 my-md-0 mw-100">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="me-2 d-none d-lg-inline text-gray-600 small">Admin User</span>
+                                <img class="rounded-circle" width="32" height="32" src="/api/placeholder/40/40" alt="User">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end shadow animated--grow-in" aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>
+                                    Profile
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>
+                                    Settings
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+
+                <!-- Page Content -->
+                <div class="container-fluid px-4">
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Dashboard Overview</h1>
+                       
+                    </div>
+
+                    <!-- Stats Cards Row -->
+                    <div class="row">
+                        <!-- Total Votes Card -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card stat-card stat-card-primary h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col me-2">
+                                            <div class="stat-label mb-1">Total Votes</div>
+                                            <div class="stat-number text-white">@ViewBag.TotalParticipants</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="icon-circle bg-primary-light">
+                                                <i class="fas fa-vote-yea fa-2x text-primary"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Voter Participation Card -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card stat-card stat-card-success h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col me-2">
+                                            <div class="stat-label mb-1">Voter Participation</div>
+                                            <div class="stat-number text-white">72.4%</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="icon-circle bg-success-light">
+                                                <i class="fas fa-users fa-2x text-success"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Active Polls Card -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card stat-card stat-card-info h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col me-2">
+                                            <div class="stat-label mb-1">Active Polls</div>
+                                            <div class="stat-number text-white">@ViewBag.VoteCount</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="icon-circle bg-info-light">
+                                                <i class="fas fa-clipboard-list fa-2x text-info"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Visitors Card -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card stat-card stat-card-warning h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col me-2">
+                                            <div class="stat-label mb-1">Visitors Today</div>
+                                            <div class="stat-number text-white">2,841</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="icon-circle bg-warning-light">
+                                                <i class="fas fa-eye fa-2x text-warning"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Row -->
+                    <div class="row">
+                        <!-- Voting Trends Chart -->
+                        <div class="col-xl-8 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <div class="card card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Voting Trends</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-container">
+                                        <canvas id="votingTrendsChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Candidate Votes Distribution -->
+                        <div class="col-xl-4 col-lg-5">
+                            <div class="card shadow mb-4">
+                                <div class="card card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Vote Distribution</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-container">
+                                        <canvas id="voteDistributionChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Navigation Buttons -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="card shadow">
+                                <div class="card card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Quick Navigation</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3">
+                                            <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-primary btn-block py-3 shadow">
+                                                <i class="fas fa-home fa-2x mb-2 d-block"></i>
+                                                Home Page
+                                            </a>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <a asp-area="Admin" asp-controller="Home" asp-action="Edit" class="btn btn-success btn-block py-3 shadow">
+                                                <i class="fas fa-plus-circle fa-2x mb-2 d-block"></i>
+                                                Add Votes
+                                            </a>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <a asp-area="Admin" asp-controller="Home" asp-action="List" class="btn btn-info btn-block py-3 shadow bg-dark">
+                                                <i class="fas fa-table fa-2x mb-2 d-block"></i>
+                                                View Results
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                <!-- Footer -->
+                <footer class="footer text-center bg-black text-white">
+                    <div class="container text-white">
+                        <span class="text-muted">Voting System Admin Panel &copy; 2025</span>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+   
+    <!-- Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+
+    <script>
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+
+        // Sample data for charts
+        document.addEventListener('DOMContentLoaded', function () {
+            // Voting Trends Chart
+            var trendCtx = document.getElementById('votingTrendsChart').getContext('2d');
+            var votingTrendsChart = new Chart(trendCtx, {
+                type: 'line',
+                data: {
+                    labels: ['6 AM', '8 AM', '10 AM', '12 PM', '2 PM', '4 PM', '6 PM', '8 PM'],
+                    datasets: [{
+                        label: 'Votes Cast',
+                        data: [250, 520, 980, 1300, 1750, 2300, 2750, 3100],
+                        backgroundColor: 'rgba(78, 115, 223, 0.05)',
+                        borderColor: 'rgba(78, 115, 223, 1)',
+                        pointBackgroundColor: 'rgba(78, 115, 223, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(78, 115, 223, 1)',
+                        borderWidth: 2,
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+
+            // Vote Distribution Chart (Doughnut chart)
+            var distCtx = document.getElementById('voteDistributionChart').getContext('2d');
+            var voteDistributionChart = new Chart(distCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Candidate A', 'Candidate B', 'Candidate C', 'Candidate D'],
+                    datasets: [{
+                        data: [4500, 3200, 2800, 1950],
+                        backgroundColor: [
+                            '#4e73df',
+                            '#1cc88a',
+                            '#36b9cc',
+                            '#f6c23e'
+                        ],
+                        hoverBackgroundColor: [
+                            '#2e59d9',
+                            '#17a673',
+                            '#2c9faf',
+                            '#e0ad2c'
+                        ],
+                        hoverBorderColor: 'rgba(234, 236, 244, 1)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            display: true
+                        }
+                    },
+                    cutout: '70%'
+                }
+            });
+        });
+
+        // Mobile sidebar toggle
+        document.querySelector('.btn.d-md-none').addEventListener('click', function () {
+            document.querySelector('.sidebar').classList.toggle('d-block');
+        });
+    </script>
+</body>
+</html>

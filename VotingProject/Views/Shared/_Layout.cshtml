@@ -1,0 +1,251 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head >
+	<meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+	<!-- theme meta -->
+	<meta name="theme-name" content="meghna" />
+
+	<!-- Favicon -->
+	<link rel="shortcut icon" type="~/Home/image/x-icon" href="images/favicon.png" />
+
+	<!-- CSS
+		================================================== -->
+	<!-- Fontawesome Icon font -->
+	<link rel="stylesheet" href="~/Home/plugins/themefisher-font/style.css">
+	<!-- bootstrap.min css -->
+	<link rel="stylesheet" href="~/Home/plugins/bootstrap/bootstrap.min.css">
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="~/Home/plugins/animate-css/animate.css">
+	<!-- Magnific popup css -->
+	<link rel="stylesheet" href="~/Home/plugins/magnific-popup/dist/magnific-popup.css">
+	<!-- Slick Carousel -->
+	<link rel="stylesheet" href="~/Home/plugins/slick-carousel/slick.css">
+	<link rel="stylesheet" href="~/Home/plugins/slick-carousel/slick-theme.css">
+	<!-- Main Stylesheet -->
+	<link rel="stylesheet" href="~/Home/css/style.css">
+
+</head>
+<body id="home" data-spy="scroll" data-target=".navbar-nav" data-offset="80">
+    <div>
+        @RenderBody()
+		<footer id="footer" class="bg-one">
+			<div class="container">
+				<div class="row wow fadeInUp" data-wow-duration="500ms">
+					<div class="col-lg-12">
+
+						<!-- Footer Social Links -->
+						<div class="social-icon">
+							<ul class="list-inline">
+								<li class="list-inline-item"><a href="https://facebook.com/themefisher"><i class="tf-ion-social-facebook"></i></a></li>
+								<li class="list-inline-item"><a href="https://twitter.com/themefisher"><i class="tf-ion-social-twitter"></i></a></li>
+								<li class="list-inline-item"><a href="https://www.youtube.com/channel/UCx9qVW8VF0LmTi4OF2F8YdA"><i class="tf-ion-social-youtube"></i></a></li>
+								<li class="list-inline-item"><a href="https://dribbble.com/themefisher"><i class="tf-ion-social-dribbble-outline"></i></a></li>
+								<li class="list-inline-item"><a href="https://pinterest.com/themefisher"><i class="tf-ion-social-pinterest-outline"></i></a></li>
+							</ul>
+						</div>
+						<!--/. End Footer Social Links -->
+						<!-- copyright -->
+						<div class="copyright text-center">
+							<a href="index.html">
+								<!-- <img src="images/logo-meghna.png" alt="Meghna" />  -->
+								<svg width="40px" height="40px" viewBox="0 0 45 44" version="1.1" xmlns="http://www.w3.org/2000/svg"
+									 xmlns:xlink="http://www.w3.org/1999/xlink">
+									<g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+										<g id="Group" transform="translate(2.000000, 2.000000)" stroke="#57CBCC" stroke-width="3">
+											<ellipse id="Oval" cx="20.5" cy="20" rx="20.5" ry="20"></ellipse>
+											<path d="M6,7 L33.5,34.5" id="Line-2" stroke-linecap="square"></path>
+											<path d="M21,20 L34,7" id="Line-3" stroke-linecap="square"></path>
+										</g>
+									</g>
+								</svg>
+							</a>
+
+							<p class="mt-3">
+								Copyright
+								&copy; <script>
+								   document.write(new Date().getFullYear())
+								</script>. All Rights Reserved. .
+							</p>
+						</div>
+						<!-- /copyright -->
+
+					</div> <!-- end col lg 12 -->
+				</div> <!-- end row -->
+			</div> <!-- end container -->
+		</footer> <!-- end footer -->
+    </div>
+	@RenderSection("Scripts", required: false)
+	<style>
+		
+		/* Modal Background & Content */
+		.modal-content {
+			background-color: #2c2f38; /* Dark background for the modal */
+			color: #f5f5f5; /* Light text */
+			border-radius: 10px; /* Rounded corners */
+			border: none;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); /* Soft shadow for floating effect */
+		}
+
+		/* Modal Header */
+		.modal-header {
+			border-bottom: 1px solid #444; /* Slight border separation */
+			padding: 20px;
+			background-color: #1c1e22; /* Darker background for header */
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		/* Modal Title */
+		.modal-title {
+			font-size: 1.5rem;
+			font-weight: 500;
+		}
+
+		/* Close Button */
+		.btn-close {
+			background: transparent;
+			border: none;
+			color: #f5f5f5;
+			font-size: 1.5rem;
+		}
+
+		/* Modal Body */
+		.modal-body {
+			padding: 30px;
+			background-color: #1f2226; /* Slightly darker background */
+		}
+
+		/* Form Inputs */
+		.form-control {
+			background-color: #333; /* Dark background for inputs */
+			color: #fff; /* Light text */
+			border: 1px solid #444; /* Subtle border */
+			border-radius: 8px; /* Rounded input fields */
+			padding: 12px;
+			margin-bottom: 15px;
+			font-size: 1rem;
+		}
+
+			/* Focus Effect for Inputs */
+			.form-control:focus {
+				border-color: #ff7e5f; /* Soft pink border on focus */
+				box-shadow: 0 0 0 0.2rem rgba(255, 126, 95, 0.5); /* Glow effect */
+			}
+
+		/* Radio Button */
+		.form-check-input {
+			background-color: #555; /* Dark radio button */
+			border-color: #777; /* Light border for radio */
+		}
+
+			.form-check-input:checked {
+				background-color: #ff7e5f; /* Soft pink when checked */
+				border-color: #ff7e5f; /* Match border color to checked state */
+			}
+
+		/* Form Labels */
+		.form-label {
+			font-weight: 600;
+			color: #ddd;
+		}
+
+		/* Submit Button */
+		.btn-submit {
+			background-color: #ff7e5f; /* Modern soft pink background */
+			color: white;
+			font-weight: 600;
+			border-radius: 8px;
+			padding: 10px 20px;
+			font-size: 1.1rem;
+			border: none;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+		}
+
+			.btn-submit:hover {
+				background-color: #ff4d39; /* Darker pink on hover */
+			}
+
+		/* Modal Fade Animation */
+		.fade .modal-dialog {
+			transform: translate(0, -50px);
+			transition: transform 0.3s ease-out;
+		}
+
+		.fade.show .modal-dialog {
+			transform: translate(0, 0);
+		}
+
+		/* Close Button Hover Effect */
+		.btn-close:hover {
+			opacity: 0.7;
+		}
+		/* Custom Radio Button */
+		.form-check-input {
+			-webkit-appearance: none; /* Remove default radio button appearance */
+			-moz-appearance: none;
+			appearance: none;
+			width: 20px;
+			height: 20px;
+			border-radius: 50%;
+			border: 2px solid #ff7e5f; /* Soft pink border */
+			background-color: #333; /* Dark background */
+			position: relative;
+			transition: all 0.3s ease; /* Smooth transition */
+			cursor: pointer;
+		}
+
+			/* Custom Checked Radio Button */
+			.form-check-input:checked {
+				background-color: #ff7e5f; /* Soft pink background when checked */
+				border-color: #ff7e5f; /* Matching border */
+			}
+
+				/* Inner Circle of Checked Radio */
+				.form-check-input:checked::before {
+					content: "";
+					position: absolute;
+					top: 4px;
+					left: 4px;
+					width: 10px;
+					height: 10px;
+					background-color: #fff; /* Inner circle color */
+					border-radius: 50%; /* Rounded inner circle */
+					transition: all 0.2s ease;
+				}
+
+			/* Hover effect */
+			.form-check-input:hover {
+				box-shadow: 0 0 8px rgba(255, 126, 95, 0.6); /* Glow effect on hover */
+			}
+
+		/* Label Style */
+		.form-check-label {
+			font-size: 1rem;
+			color: #ddd; /* Light color for label text */
+			margin-left: 10px; /* Space between radio button and label */
+			cursor: pointer;
+		}
+
+		/* Focus Effect */
+		.form-check-input:focus {
+			outline: none; /* Remove default focus outline */
+			border-color: #ff7e5f; /* Soft pink border on focus */
+			box-shadow: 0 0 5px rgba(255, 126, 95, 0.6); /* Soft glow on focus */
+		}
+
+		.vote-description {
+			min-height: 100px; /* الحد الأدنى للطول */
+			overflow: hidden; /* يخفي النص الزائد */
+			text-overflow: ellipsis; /* يظهر النقاط الثلاث في حال كان النص كبير */
+			display: -webkit-box;
+			-webkit-line-clamp: 3; /* هذا سيسمح بإظهار ثلاثة أسطر فقط */
+			-webkit-box-orient: vertical;
+			line-height: 1.5;
+		}
+	</style>
+</body>
+</html>

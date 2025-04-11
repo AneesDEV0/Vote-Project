@@ -1,0 +1,63 @@
+﻿@{
+}
+@model List<VotingProject.Models.TbVote>
+
+<div class="card container" style="height: 100vh;">
+    <div class="card-body">
+        <h4 class="card-title fs-1">Data table</h4> <!-- تكبير العنوان -->
+
+        <div class="row">
+            <div class="col-12">
+                <table id="order-listing" class="table fs-2">
+                    <!-- تكبير كل النص داخل الجدول -->
+                    <thead class="fs-3">
+                        <!-- تكبير رؤوس الأعمدة -->
+                        <tr>
+                            <th>Vote #</th>
+                            <th>Vote Name</th>
+                            <th>Options Count</th>
+                            <th>Votes Count</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Count; i++)
+                        {
+                            <tr>
+                                <td>@(i + 1)</td>
+                                <td>@Model[i].VoteName</td>
+                                <td>@Model[i].Options.Count</td>
+                                <td>@Model[i].VoteResults.Count</td>
+                                <td>
+                                    <div class="d-flex gap-2">
+                                        <a class="btn btn-outline-primary">
+                                            View        
+                                        </a>
+                                        <a asp-controller="Home" asp-action="Delete" asp-route-id="@Model[i].VoteId" class="btn btn-outline-primary">
+                                            Delete
+                                        </a>
+                                    </div>
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/assets/vendors/js/vendor.bundle.base.js"></script>
+    <script src="~/assets/vendors/datatables.net/jquery.dataTables.js"></script>
+    <script src="~/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+    <script src="~/assets/js/off-canvas.js"></script>
+    <script src="~/assets/js/hoverable-collapse.js"></script>
+    <script src="~/assets/js/misc.js"></script>
+    <script src="~/assets/js/settings.js"></script>
+    <script src="~/assets/js/todolist.js"></script>
+    <script src="~/assets/js/jquery.cookie.js"></script>
+    <script src="~/assets/js/data-table.js"></script>
+}

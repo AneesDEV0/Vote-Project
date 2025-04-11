@@ -1,0 +1,107 @@
+﻿@model TbVote
+@{
+}
+<section id="contact-us" class="contact-us section-bg" style="height:100vh; overflow:auto">
+	<div class="container">
+		<div class="row">
+				
+			<div class="col-12">
+				<!-- section title -->
+				<div class="title text-center wow fadeIn" data-wow-duration="500ms">
+					<h2>Add An <span class="color">Vote</span></h2>
+					<div class="border"></div>
+				</div>
+				<!-- /section title -->
+			</div>
+
+			<!-- Contact Details -->
+			
+			<!-- Contact Form -->
+			<div class="contact-form col-lg-12 mt-4 mt-lg-0 wow fadeInUp" data-wow-duration="500ms" data-wow-delay="300ms">
+				<form class="forms-sample" method="post" asp-controller="Home" asp-action="Save" enctype="multipart/form-data" role="form">
+					<div class="form-group">
+						<label class="fs-1">Title</label>
+						<input type="text" class="form-control fs-2" asp-for="VoteName" />
+					</div>
+					<div class="form-group">
+						<label class="fs-1">Description</label>
+						<textarea type="text" class="form-control fs-2" asp-for="VoteDescription">
+
+						</textarea>
+					</div>
+
+					<div id="options-wrapper">
+						@for (int i = 0; i < Model.Options.Count; i++)
+						{
+							<div class="form-group option-item">
+								<label>Option @i</label>
+								<div class="d-flex">
+									<input type="text" class="form-control fs-2" name="Options[@i].OptionName" value="@Model.Options[i].OptionName" />
+									<button type="button" class="btn btn-danger ms-2" onclick="removeOption(this)">Remove</button>
+								</div>
+								<span asp-validation-for="Options[@i].OptionName" class="text-danger"></span>
+							</div>
+						}
+					</div>
+	
+
+					<button type="button" class="btn btn-secondary mt-2" onclick="addOption()">Add Option</button>
+
+					<div class="form-group mt-3 text-right">
+						<input type="submit" class="btn btn-primary" value="Submit Vote" />
+					</div>
+				</form>
+
+			</div>
+			<!-- ./End Contact Form -->
+
+		</div> <!-- end row -->
+	</div> <!-- end container -->
+
+		
+
+</section> <!-- end section -->
+
+@section Scripts {
+	<script src="~/Home/plugins/jquery/jquery.min.js"></script>
+	<script src="~/Home/plugins/slick-carousel/slick.min.js"></script>
+	<script src="~/Home/plugins/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
+	<script src="~/Home/plugins/wow/wow.min.js"></script>
+	<script src="~/Home/js/script.js"></script>
+	<script>
+		let optionCount = @Model.Options?.Count ?? 0;
+
+		function addOption() {
+			const wrapper = document.getElementById("options-wrapper");
+			const div = document.createElement("div");
+			div.className = "form-group option-item";
+			div.innerHTML = `
+					<label class="fs-2">Option ${optionCount + 1}</label>
+					<div class="d-flex">
+						<input type="text" class="form-control fs-2" name="Options[${optionCount}].OptionName" />
+						<button type="button" class="btn btn-danger ms-2" onclick="removeOption(this)">Remove</button>
+					</div>
+				`;
+			wrapper.appendChild(div);
+			optionCount++;
+		}
+
+		function removeOption(button) {
+			const optionDiv = button.closest(".option-item");
+			optionDiv.remove();
+			reIndexOptions();
+		}
+
+		function reIndexOptions() {
+			const optionItems = document.querySelectorAll("#options-wrapper .option-item");
+			optionItems.forEach((item, index) => {
+				const label = item.querySelector("label");
+				const input = item.querySelector("input");
+				label.textContent = `Option ${index + 1}`;
+				input.name = `Options[${index}].OptionName`;
+			});
+			optionCount = optionItems.length;
+		}
+	</script>
+
+}
